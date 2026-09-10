@@ -1,0 +1,122 @@
+export type Language = 'en' | 'et';
+const estonian = {
+  "OOP Cards home": "OOP Cards avaleht",
+  "Main navigation": "Peamenüü",
+  "LEARN BY PLAYING": "ÕPI MÄNGIDES",
+  "Your learning path": "Sinu õpiteekond",
+  "Concept library": "Mõistete kogu",
+  "A SMALL GAME FOR BIG IDEAS": "VÄIKE MÄNG SUURTE IDEEDE JAOKS",
+  "Get to know OOP.": "Tutvu OOP-ga.",
+  "One card at a time.": "Üks kaart korraga.",
+  "Classes, objects, and those other mysterious words.": "Klassid, objektid ja teised salapärased sõnad.",
+  " Make them click with bite-sized lessons and playful challenges.": " Saa neist aru lühikeste õppetundide ja mänguliste ülesannete abil.",
+  "Play again <span>↗</span>": "Mängi uuesti <span>↗</span>",
+  "Continue learning <span>↗</span>": "Jätka õppimist <span>↗</span>",
+  "Let’s start learning <span>↗</span>": "Hakkame õppima <span>↗</span>",
+  "No coding experience needed": "Programmeerimiskogemust pole vaja",
+  "At your own pace": "Omas tempos",
+  "TypeScript examples": "TypeScripti näited",
+  "No lives. No pressure.": "Ilma elude ja pingeta.",
+  "A class blueprint creates an object": "Klassi kavandi põhjal luuakse objekt",
+  "THE BLUEPRINT": "KAVAND",
+  "CLASS": "KLASS",
+  "ONE OF A KIND": "AINULAADNE ISEND",
+  "Meet Max.": "See on Max.",
+  "OBJECT": "OBJEKT",
+  "one blueprint, many possibilities": "üks kavand, palju võimalusi",
+  "YOUR LEARNING PATH": "SINU ÕPITEEKOND",
+  "Small steps. Solid foundations.": "Väikesed sammud. Kindel alus.",
+  "5 concepts · 25 challenges": "5 mõistet · 25 ülesannet",
+  "✓ COMPLETED": "✓ LÄBITUD",
+  "5 challenges": "5 ülesannet",
+  "Understand the idea. Then meet the code.": "Mõista ideed. Seejärel tutvu koodiga.",
+  "Read a little, play a little, and see each concept come to life in TypeScript.": "Loe veidi, mängi veidi ja vaata, kuidas mõisted TypeScriptis ellu ärkavad.",
+  "Learn": "Õpi",
+  "Play": "Mängi",
+  "Connect": "Loo seoseid",
+  "← Learning path": "← Õpiteekond",
+  "✓ Completed · reviewing": "✓ Läbitud · kordamine",
+  "Take your time": "Võta rahulikult",
+  "Lesson stages": "Õppetunni etapid",
+  "Learn the idea": "Tutvu ideega",
+  "Play the cards": "Mängi kaartidega",
+  "Meet the code": "Tutvu koodiga",
+  "THE IDEA": "IDEE",
+  "↳ THINK OF IT THIS WAY": "↳ MÕTLE SELLEST NII",
+  "TWO THINGS TO REMEMBER": "KAKS ASJA, MIDA MEELES PIDADA",
+  "You don’t need to memorize it all.": "Sa ei pea kõike pähe õppima.",
+  "You’ll learn by trying.": "Õpid katsetades.",
+  "Got it. Let’s play ↗": "Selge. Mängime! ↗",
+  "A LITTLE THOUGHT EXPERIMENT": "VÄIKE MÕTTEHARJUTUS",
+  "CONNECT THE DOTS": "LOO SEOSEID",
+  "CHOOSE YOUR ANSWER": "VALI VASTUS",
+  "Answer choices": "Vastusevariandid",
+  "✦ Exactly right.": "✦ Täpselt õige.",
+  "Let’s think about it.": "Mõtleme korraks.",
+  "Not quite. ": "Mitte päris. ",
+  "<p>No timer, no lost lives. Just give it a go.</p>": "<p>Pole ajapiirangut ega kaotatud elusid. Lihtsalt proovi.</p>",
+  "See it in TypeScript →": "Vaata TypeScripti näidet →",
+  "Next card →": "Järgmine kaart →",
+  "Try this card again ↺": "Proovi seda kaarti uuesti ↺",
+  "Check answer": "Kontrolli vastust",
+  "↗ Revisit the theory": "↗ Vaata teooriat uuesti",
+  "THE IDEA, IN TYPESCRIPT": "IDEE TYPESCRIPTIS",
+  "Now the code makes a little more sense.": "Nüüd on kood veidi arusaadavam.",
+  "You’ve played with the concept. Here’s what it looks like in a real class.": "Oled mõistega mängides tutvunud. Nii näeb see välja päris klassis.",
+  "This is a read-only example. You don’t need to write or run code to finish the lesson.": "See näide on lugemiseks. Õppetunni lõpetamiseks ei pea sa koodi kirjutama ega käivitama.",
+  "Complete this concept ✦": "Lõpeta õppetund ✦",
+  "ANOTHER IDEA CLICKED": "VEEL ÜKS IDEE SAI SELGEKS",
+  "A solid foundation. All yours.": "Kindel alus on nüüd sinu.",
+  "That’s a concept in your pocket.": "Veel üks mõiste on selge.",
+  "You’ve completed": "Läbisid õppetunni",
+  "You’ve explored all five concepts and solved 25 challenges. Revisit any lesson whenever you like.": "Oled tutvunud kõigi viie mõistega ja lahendanud 25 ülesannet. Võid iga õppetundi igal ajal korrata.",
+  "Little by little, you’re learning to think in objects.": "Sammhaaval õpid objektides mõtlema.",
+  " · Progress saved on this device": " · Edenemine on sellesse seadmesse salvestatud",
+  " · Progress is available for this session": " · Edenemine säilib selle seansi jooksul",
+  "Explore the concept library →": "Vaata mõistete kogu →",
+  "Back to learning path": "Tagasi õpiteekonnale",
+  "YOUR POCKET REFERENCE": "SINU VÄIKE MEELESPEA",
+  "A few words. A lot of possibilities.": "Mõned sõnad. Palju võimalusi.",
+  "Come back whenever a concept needs a little refresh.": "Tule tagasi, kui mõni mõiste vajab meeldetuletamist.",
+  "Play this lesson ↗": "Mängi seda õppetundi ↗",
+  "Little cards. Big ideas.": "Väikesed kaardid. Suured ideed.",
+  "Your progress stays on this device.": "Sinu edenemine jääb sellesse seadmesse.",
+  "Progress cannot be saved in this browser.": "Selles brauseris ei saa edenemist salvestada.",
+  "Reset progress": "Lähtesta edenemine",
+  "Start fresh?": "Alustad uuesti?",
+  "This clears completed lessons on this device.": "See kustutab läbitud õppetundide andmed sellest seadmest.",
+  "Keep my progress": "Säilita edenemine",
+  "Language": "Keel",
+  "conceptCount": "{count} / 5 mõistet",
+  "cardCount": "KAART {current} / {total}",
+  "challengeCount": "Ülesanne {current} / {total}",
+  "completedCount": "Läbitud mõisteid: {count} / 5",
+  "nextLesson": "Järgmisena: {title} →",
+  "pageTitle": "OOP Cards — Väikesed kaardid. Suured ideed.",
+  "pageDescription": "Õpi objektorienteeritud programmeerimist üks kaart korraga. Algajasõbralikud õppetunnid ja TypeScripti näited."
+} as const;
+type Message = keyof typeof estonian;
+const english: Partial<Record<Message, string>> = {
+  "conceptCount": "{count} / 5 concepts",
+  "cardCount": "CARD {current} OF {total}",
+  "challengeCount": "Challenge {current} of {total}",
+  "completedCount": "{count} of 5 concepts completed",
+  "nextLesson": "Next: {title} →",
+  "pageTitle": "OOP Cards — Little cards. Big ideas.",
+  "pageDescription": "Learn object-oriented programming one card at a time. Beginner-friendly lessons and TypeScript examples."
+};
+
+export function getInitialLanguage(): Language {
+  try {
+    const saved = localStorage.getItem('oop-cards-language');
+    if (saved === 'en' || saved === 'et') return saved;
+  } catch { /* Storage is optional. */ }
+  return navigator.language.toLowerCase().split('-')[0] === 'et' ? 'et' : 'en';
+}
+
+export function createTranslator(language: Language) {
+  return (key: Message, values: Record<string, string | number> = {}): string => {
+    const message = language === 'et' ? estonian[key] : (english[key] ?? key);
+    return message.replace(/\{(\w+)\}/g, (match, name: string) => String(values[name] ?? match));
+  };
+}
