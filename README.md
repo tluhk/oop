@@ -73,10 +73,18 @@ Deployment follows the official [Vite static deployment guide](https://vite.dev/
 - `src/style.css`: responsive styles.
 - `.github/workflows/deploy.yml`: production build and Pages deployment.
 
-Examples are read-only teaching material, not an in-browser code editor. Each example is standalone. To add a challenge, update its lesson in `src/lessons.ts`; the interface derives challenge counts from each lesson. Keep English and Estonian content aligned. Lesson indices are persisted, so append new lessons and update the track order in `src/main.ts` rather than reordering existing entries.
+Examples are read-only teaching material, not an in-browser code editor. Each example is standalone. To add a challenge, update its lesson in `src/lessons.ts`; the interface derives challenge counts from each lesson. Keep English and Estonian content aligned. Keep lesson IDs stable and update module membership in `src/curriculum.ts`; saved progress is independent of array order.
 
 ## Course alignment
 
 The suggested path starts with TypeScript, continues through OOP, and ends with API design and testing. All lessons remain directly accessible. Original saved indices 0–4 still refer to the original OOP lessons.
 
 Content is adapted from `Programmeerimine_II/concepts/tyybid`, `typescript`, `typescriptigaAlustamine`, and `oop`, together with the course topic list. The added API examples are standalone teaching models, not a running Express server. The course materials provide the full framework and database setup.
+
+## Curriculum expansion
+
+Follow [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for staged work and [the curriculum map](docs/CURRICULUM_MAP.md) for lecture/homework alignment and resource corrections.
+
+Modules and suggested prerequisites are defined in `src/curriculum.ts`. Module filters do not lock lessons. Three self-reported practice activities are tracked separately from lesson completion. Course links point to the sibling checkout's canonical GitHub repository, `tluhk/Tagarakendused`, and are labeled as Estonian.
+
+Lessons now have stable IDs. `src/progress.ts` migrates v1 numeric progress to `oop-cards-progress-v2`, which stores separate lesson and activity IDs. The legacy record is left as a backup; v2 is authoritative, including after reset. Keep IDs stable when editing or reordering lessons. Add new IDs to the curriculum; do not change the frozen legacy migration mapping. Challenge `kind` may be `choice` (default), `predict`, or `repair`; prediction and repair cards display code with preserved whitespace. Later stages add authored repair and ordering exercises.

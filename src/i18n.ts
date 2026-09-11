@@ -1,5 +1,19 @@
 export type Language = 'en' | 'et';
 const estonian = {
+  "Choose a module": "Vali moodul",
+  "All modules": "Kõik moodulid",
+  "Follow the suggested order, or open any lesson.": "Järgi soovitatud järjekorda või ava ükskõik milline õppetund.",
+  "Independent practice": "Iseseisev harjutus",
+  "Course material (Estonian)": "Õppematerjal (eesti keeles)",
+  "Self-reported practice; does not complete a lesson.": "Märgid tehtuks ise; see ei lõpeta õppetundi.",
+  "Practice completed \u2014 undo": "Harjutus tehtud — tühista",
+  "Mark practice complete": "Märgi harjutus tehtuks",
+  "Continue with the course": "Jätka kursuse materjalidega",
+  "Suggested preparation": "Soovitatud eelteadmised",
+  "Start here": "Alusta siit",
+  "Repair the code": "Paranda kood",
+  "Predict the result": "Ennusta tulemust",
+
   "TypeScript foundations": "TypeScripti alused",
   "Object-oriented programming": "Objektorienteeritud programmeerimine",
   "Build a testable API": "Loo testitav API",
@@ -90,7 +104,7 @@ const estonian = {
   "Progress cannot be saved in this browser.": "Selles brauseris ei saa edenemist salvestada.",
   "Reset progress": "Lähtesta edenemine",
   "Start fresh?": "Alustad uuesti?",
-  "This clears completed lessons on this device.": "See kustutab läbitud õppetundide andmed sellest seadmest.",
+  "This clears completed lessons on this device.": "See kustutab läbitud õppetundide ja iseseisvate harjutuste andmed sellest seadmest.",
   "Keep my progress": "Säilita edenemine",
   "Language": "Keel",
   "conceptCount": "{count} / {total} mõistet",
@@ -103,6 +117,7 @@ const estonian = {
 } as const;
 type Message = keyof typeof estonian;
 const english: Partial<Record<Message, string>> = {
+  "This clears completed lessons on this device.": "This clears completed lessons and independent practice on this device.",
   "Get to know OOP.": "From TypeScript to APIs.",
   "Classes, objects, and those other mysterious words.": "Learn types, objects, and testable API design.",
   "pathCount": "{total} concepts · {challenges} challenges",

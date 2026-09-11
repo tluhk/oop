@@ -1,4 +1,5 @@
 export interface Challenge {
+  kind?: 'choice' | 'predict' | 'repair';
   card: string;
   icon: string;
   prompt: string;
@@ -7,6 +8,7 @@ export interface Challenge {
   explanation: string;
 }
 export interface Lesson {
+  id: string;
   title: string;
   subtitle: string;
   icon: string;
@@ -21,6 +23,7 @@ export interface Lesson {
 }
 export const lessons: Lesson[] = [
   {
+    id: 'classes-objects',
     title: 'Classes & objects', subtitle: 'Meet the blueprint and the things it makes.', icon: '▧', color: 'mint',
     question: 'A blueprint. A whole world of possibilities.',
     theory: 'A class is a blueprint that defines the properties and behaviors its objects can have. An object is a specific instance of a class, with its own values.',
@@ -31,12 +34,13 @@ export const lessons: Lesson[] = [
       {card:'A dog named Max',icon:'🐶',prompt:'Blueprint or instance? Classify this card.',options:['Class','Object'],answer:1,explanation:'Max is one particular dog, with his own name and state. He represents an object.'},
       {card:'Car',icon:'🚙',prompt:'Blueprint or instance? Classify this card.',options:['Class','Object'],answer:0,explanation:'Car is a blueprint for creating individual cars. A specific car would be an object.'},
       {card:'Anna’s red car',icon:'🚗',prompt:'Blueprint or instance? Classify this card.',options:['Class','Object'],answer:1,explanation:'Anna’s red car is a particular instance of Car, so it is an object.'},
-      {card:'new Dog("Max")\nnew Dog("Luna")',icon:'✦',prompt:'Each “new” creates an instance. How many objects are created?',options:['1 object','2 objects','3 objects'],answer:1,explanation:'Each call to new Dog creates a separate object. One class can create many objects.'},
+      {kind:'predict',card:'new Dog("Max")\nnew Dog("Luna")',icon:'✦',prompt:'Each “new” creates an instance. How many objects are created?',options:['1 object','2 objects','3 objects'],answer:1,explanation:'Each call to new Dog creates a separate object. One class can create many objects.'},
     ],
     code:'class Dog {\n  constructor(public name: string) {}\n}\n\nconst max = new Dog("Max");\nconst luna = new Dog("Luna");\n\nconsole.log(max.name);  // "Max"\nconsole.log(luna.name); // "Luna"',
     takeaway:'Dog is the class. max and luna refer to two different objects. The constructor runs when each object is created; public name declares and initializes its name property.',
   },
   {
+    id: 'properties-methods',
     title:'Properties & methods',subtitle:'What an object has. What an object does.',icon:'⚡',color:'peach',
     question:'Every object has a little personality.',
     theory:'Properties store an object’s state, such as its name or energy. Methods are functions on an object that describe behavior, such as sleeping or playing.',
@@ -47,11 +51,12 @@ export const lessons: Lesson[] = [
       {card:'bark()',icon:'💬',prompt:'Does this card store state or perform behavior?',options:['Property','Method'],answer:1,explanation:'bark() is an action called on the dog. It is a method.'},
       {card:'energy = 10',icon:'🔋',prompt:'Does this card store state or perform behavior?',options:['Property','Method'],answer:0,explanation:'energy records the dog’s current state, so it is a property.'},
       {card:'sleep()',icon:'🌙',prompt:'Does this card store state or perform behavior?',options:['Property','Method'],answer:1,explanation:'sleep() performs behavior. A method can also update properties.'},
-      {card:'sleep() {\n  this.energy = 100;\n}',icon:'☀️',prompt:'Energy starts at 10. What is it after calling sleep()?',options:['10','100','110'],answer:1,explanation:'The assignment sets this object’s energy to 100. It does not add 100 to the previous value.'},
+      {kind:'predict',card:'sleep() {\n  this.energy = 100;\n}',icon:'☀️',prompt:'Energy starts at 10. What is it after calling sleep()?',options:['10','100','110'],answer:1,explanation:'The assignment sets this object’s energy to 100. It does not add 100 to the previous value.'},
     ],
     code:'class Dog {\n  name = "Max";\n  energy = 10;\n\n  sleep(): void {\n    this.energy = 100;\n  }\n}\n\nconst max = new Dog();\nmax.sleep();\nconsole.log(max.energy); // 100',takeaway:'name and energy are properties. sleep is a method. this refers to the object whose method is running; void means the method does not return a value.',
   },
   {
+    id: 'encapsulation',
     title:'Encapsulation',subtitle:'Keep state safe with a few good boundaries.',icon:'⛨',color:'lavender',
     question:'A little boundary goes a long way.',
     theory:'Encapsulation brings state and behavior together and controls access to internal state. Private properties and public methods help an object enforce its rules.',
@@ -67,6 +72,7 @@ export const lessons: Lesson[] = [
     code:'class Dog {\n  private energy = 10;\n\n  play(): void {\n    if (this.energy >= 3) {\n      this.energy -= 3;\n    }\n  }\n\n  getEnergy(): number {\n    return this.energy;\n  }\n}\n\nconst max = new Dog();\nmax.play();\nconsole.log(max.getEnergy()); // 7',takeaway:'Other code asks Max to play instead of changing his energy directly. TypeScript private is a type-checking boundary, not a security mechanism for secret data.',
   },
   {
+    id: 'inheritance',
     title:'Inheritance',subtitle:'Build on what another class already knows.',icon:'⑂',color:'blue',
     question:'Some things run in the family.',
     theory:'Inheritance lets a specialized class reuse and extend another class. The subclass inherits accessible behavior from its parent class. Use it for an “is a” relationship.',
@@ -82,6 +88,7 @@ export const lessons: Lesson[] = [
     code:'class Animal {\n  eat(): string {\n    return "Eating";\n  }\n}\n\nclass Dog extends Animal {\n  bark(): string {\n    return "Woof!";\n  }\n}\n\nconst max = new Dog();\nconsole.log(max.eat());  // "Eating"\nconsole.log(max.bark()); // "Woof!"',takeaway:'extends establishes inheritance. Dog reuses eat() and adds bark(). Choose inheritance for “is a”; storing a separate object works well for “has a”.',
   },
   {
+    id: 'polymorphism',
     title:'Polymorphism',subtitle:'One shared action. Different personalities.',icon:'✳',color:'yellow',
     question:'Same invitation. Different responses.',
     theory:'Polymorphism lets different types of objects respond to a shared operation in their own way. Code can work with the general type while each object supplies its own behavior.',
@@ -101,6 +108,7 @@ export const lessons: Lesson[] = [
 // Append to preserve the original saved lesson indices.
 const courseLessons: Lesson[] = [
   {
+    id: 'typescript-basics',
     "title": "TypeScript basics",
     "subtitle": "Give your values clear types.",
     "question": "Give your values clear types.",
@@ -181,6 +189,7 @@ const courseLessons: Lesson[] = [
     ]
   },
   {
+    id: 'interfaces-unions',
     "title": "Interfaces & unions",
     "subtitle": "Describe the data your API accepts.",
     "question": "Describe the data your API accepts.",
@@ -259,6 +268,7 @@ const courseLessons: Lesson[] = [
     ]
   },
   {
+    id: 'composition-contracts',
     "title": "Composition & contracts",
     "subtitle": "Give a service its dependencies.",
     "question": "Give a service its dependencies.",
@@ -337,6 +347,7 @@ const courseLessons: Lesson[] = [
     ]
   },
   {
+    id: 'api-layers',
     "title": "API layers",
     "subtitle": "Follow a request through the application.",
     "question": "Follow a request through the application.",
@@ -415,6 +426,7 @@ const courseLessons: Lesson[] = [
     ]
   },
   {
+    id: 'async-errors',
     "title": "Async & errors",
     "subtitle": "Wait for data and handle missing results.",
     "question": "Wait for data and handle missing results.",
@@ -493,6 +505,7 @@ const courseLessons: Lesson[] = [
     ]
   },
   {
+    id: 'testable-services',
     "title": "Testable services",
     "subtitle": "Prove behavior with controlled dependencies.",
     "question": "Prove behavior with controlled dependencies.",

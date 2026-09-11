@@ -1,6 +1,6 @@
 # Course companion implementation plan
 
-Status: planned; implementation of this expansion has not started.
+Status: Stage A complete. Next: Stage B — setup, TypeScript, practical OOP, and code repair.
 
 ## Objective
 
@@ -23,21 +23,21 @@ The starting application has 11 bilingual lessons and 55 challenges. This plan c
 
 ### Curriculum audit
 
-- [ ] Review all six lectures, assignments, concept pages, and current game lessons.
-- [ ] Map course learning outcomes to lessons and exercises.
-- [ ] Identify missing prerequisites, duplicated explanations, and incomplete or inconsistent examples.
-- [ ] Define the recommended sequence and distinguish core material from optional extensions.
-- [ ] Choose a consistent posts/categories API example aligned with course assignments.
-- [ ] Save a curriculum map connecting resources, game lessons, and practical tasks.
+- [x] Review all six lectures, assignments, concept pages, and current game lessons.
+- [x] Map course learning outcomes to lessons and exercises.
+- [x] Identify missing prerequisites, duplicated explanations, and incomplete or inconsistent examples.
+- [x] Define the recommended sequence and distinguish core material from optional extensions.
+- [x] Choose a consistent posts/categories API example aligned with course assignments.
+- [x] Save a curriculum map connecting resources, game lessons, and practical tasks.
 
 ### Application foundations
 
-- [ ] Introduce stable lesson IDs and migrate existing saved progress.
-- [ ] Define modules, lesson order, prerequisites, and course-resource links.
-- [ ] Support multiple exercise types and variable challenge counts.
-- [ ] Track lesson completion separately from practical activities.
-- [ ] Make navigation manageable as the curriculum grows and show a recommended next step.
-- [ ] Preserve the current position and answer state when switching languages.
+- [x] Introduce stable lesson IDs and migrate existing saved progress.
+- [x] Define modules, lesson order, prerequisites, and course-resource links.
+- [x] Support multiple exercise types and variable challenge counts.
+- [x] Track lesson completion separately from practical activities.
+- [x] Make navigation manageable as the curriculum grows and show a recommended next step.
+- [x] Preserve the current position and answer state when switching languages.
 
 Acceptance: the curriculum map is reviewable; the expanded lesson structure works; migration preserves existing completions; navigation and language switching pass verification.
 
@@ -159,7 +159,7 @@ Apply as relevant before closing each stage:
 
 | Stage | Status | Results, verification, and decisions |
 | --- | --- | --- |
-| A | Not started | Next stage: curriculum audit, then application foundations. |
+| A | Complete | Curriculum map and correction queue saved in `docs/CURRICULUM_MAP.md`. Stable IDs, v1→v2 migration, module filters, prerequisite/resource links, exercise presentation types, and separate practice tracking implemented. Build and 11 tests pass; desktop and 390px mobile layout plus keyboard interactions checked. |
 | B | Not started | |
 | C | Not started | |
 | D | Not started | |
@@ -169,3 +169,11 @@ Apply as relevant before closing each stage:
 ## Definition of complete
 
 Every planned topic has aligned learning material and practice, the connected project's checkpoints work, both languages are supported, and existing users retain their progress. Deployment is not part of this plan unless separately requested.
+
+## Stage A delivery notes
+
+- Files: `src/curriculum.ts`, `src/progress.ts`, lesson files, `src/main.ts`, `src/i18n.ts`, `src/style.css`, `tests/game.test.mjs`, `docs/CURRICULUM_MAP.md`, and `README.md`.
+- Verification: all 55 challenges in both languages, standalone example type-checking, progress migration/sanitization, storage failures, reordering, reset precedence, module filtering, practice toggles, language continuity, and variable challenge counts. Production build passes. Browser checks covered desktop and 390×844 mobile layout, Tab/Enter module selection, and Space activation of practice toggles. Physical touch-device testing remains for Stage F.
+- Course audit scope: local lecture outlines, slide topic lists, homework briefs, project description and concept inventory. Recordings, rendered PDFs, external pages, and archived starter execution remain outside this stage. Resource corrections are queued for B–F; no assignment requirements were changed.
+- Decisions: use the canonical `tluhk/Tagarakendused` repository for course links; keep the guided blog as practice because homework requires a different student project.
+- Exercise foundation supports choice, prediction, and structured repair presentation. Authored repair lessons remain in B and ordering/sorting in C. The three self-reported activities are preparation prompts, not the future runnable checkpoints.

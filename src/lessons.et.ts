@@ -2,10 +2,11 @@ import { lessons as englishLessons, type Lesson } from './lessons';
 
 // Keep TypeScript identifiers unchanged so learners can connect both languages
 // to the same code. Game mechanics are shared with the English lessons.
-const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' | 'analogy' | 'terms' | 'takeaway'> & {
+const content: Array<Pick<Lesson, 'id' | 'title' | 'subtitle' | 'question' | 'theory' | 'analogy' | 'terms' | 'takeaway'> & {
   challenges: Array<Pick<Lesson['challenges'][number], 'card' | 'prompt' | 'options' | 'explanation'>>;
 }> = [
   {
+    id: 'classes-objects',
     title: 'Klassid ja objektid', subtitle: 'Tutvu kavandi ja selle põhjal loodud asjadega.',
     question: 'Üks kavand. Terve maailm võimalusi.',
     theory: 'Klass on kavand, mis määrab, millised omadused ja käitumine selle objektidel võivad olla. Objekt on klassi konkreetne isend ehk eksemplar, millel on oma väärtused.',
@@ -21,6 +22,7 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
     takeaway:'Dog on klass. max ja luna viitavad kahele eri objektile. Konstruktor käivitatakse iga objekti loomisel; public name deklareerib ja algväärtustab objekti name-omaduse.',
   },
   {
+    id: 'properties-methods',
     title:'Omadused ja meetodid',subtitle:'Mis objektil on ja mida ta teeb.',
     question:'Igal objektil on oma iseloom.',
     theory:'Omadused salvestavad objekti olekut, näiteks nime või energiataset. Meetodid on objektile kuuluvad funktsioonid, mis kirjeldavad käitumist, näiteks magamist või mängimist.',
@@ -36,6 +38,7 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
     takeaway:'name ja energy on omadused. sleep on meetod. this viitab objektile, mille meetod parasjagu töötab; void tähendab, et meetod ei tagasta väärtust.',
   },
   {
+    id: 'encapsulation',
     title:'Kapseldamine',subtitle:'Hoia objekti olek kindlate piiridega korras.',
     question:'Väike piir aitab palju.',
     theory:'Kapseldamine koondab oleku ja käitumise ning kontrollib ligipääsu objekti sisemisele olekule. Privaatsed omadused ja avalikud meetodid aitavad objektil oma reegleid järgida.',
@@ -51,6 +54,7 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
     takeaway:'Muu kood palub Maxil mängida, selle asemel et tema energiat otse muuta. TypeScripti private piirab ligipääsu tüübikontrolli ajal; see ei ole salajaste andmete turvamehhanism.',
   },
   {
+    id: 'inheritance',
     title:'Pärimine',subtitle:'Kasuta seda, mida teine klass juba oskab.',
     question:'Mõni oskus tuleb perekonnast.',
     theory:'Pärimine võimaldab täpsemal alamklassil teise klassi omadusi ja käitumist taaskasutada ning täiendada. Alamklass pärib ülemklassilt ligipääsetava käitumise. Kasuta pärimist seose „on üks liik“ korral.',
@@ -66,6 +70,7 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
     takeaway:'extends määrab pärimise seose. Dog kasutab päritud eat() meetodit ja lisab bark() meetodi. Vali pärimine seose „on üks liik“ jaoks; seose „sisaldab“ puhul sobib eraldi objekti hoidmine omadusena.',
   },
   {
+    id: 'polymorphism',
     title:'Polümorfism',subtitle:'Üks ühine tegevus. Erinevad tulemused.',
     question:'Sama palve. Erinevad vastused.',
     theory:'Polümorfism võimaldab eri tüüpi objektidel vastata samale tegevusele omal moel. Kood saab kasutada üldist tüüpi, samal ajal kui iga objekt määrab oma käitumise.',
@@ -84,6 +89,7 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
 
 const courseContent: typeof content = [
   {
+    id: 'typescript-basics',
     "title": "TypeScripti alused",
     "subtitle": "Anna väärtustele selged tüübid.",
     "question": "Anna väärtustele selged tüübid.",
@@ -151,6 +157,7 @@ const courseContent: typeof content = [
     ]
   },
   {
+    id: 'interfaces-unions',
     "title": "Liidesed ja ühendtüübid",
     "subtitle": "Kirjelda API vastuvõetavaid andmeid.",
     "question": "Kirjelda API vastuvõetavaid andmeid.",
@@ -216,6 +223,7 @@ const courseContent: typeof content = [
     ]
   },
   {
+    id: 'composition-contracts',
     "title": "Kompositsioon ja lepingud",
     "subtitle": "Anna teenusele vajalikud sõltuvused.",
     "question": "Anna teenusele vajalikud sõltuvused.",
@@ -281,6 +289,7 @@ const courseContent: typeof content = [
     ]
   },
   {
+    id: 'api-layers',
     "title": "API kihid",
     "subtitle": "Jälgi päringut läbi rakenduse.",
     "question": "Jälgi päringut läbi rakenduse.",
@@ -346,6 +355,7 @@ const courseContent: typeof content = [
     ]
   },
   {
+    id: 'async-errors',
     "title": "Asünkroonsus ja vead",
     "subtitle": "Oota andmeid ja käsitle puuduvaid tulemusi.",
     "question": "Oota andmeid ja käsitle puuduvaid tulemusi.",
@@ -411,6 +421,7 @@ const courseContent: typeof content = [
     ]
   },
   {
+    id: 'testable-services',
     "title": "Testitavad teenused",
     "subtitle": "Kontrolli käitumist juhitavate sõltuvustega.",
     "question": "Kontrolli käitumist juhitavate sõltuvustega.",
@@ -478,8 +489,15 @@ const courseContent: typeof content = [
 ];
 content.push(...courseContent);
 
-export const estonianLessons: Lesson[] = englishLessons.map((lesson, index) => ({
-  ...lesson,
-  ...content[index],
-  challenges: lesson.challenges.map((challenge, round) => ({ ...challenge, ...content[index].challenges[round] })),
-}));
+const translations = new Map(content.map(lesson => [lesson.id, lesson]));
+export const estonianLessons: Lesson[] = englishLessons.map(lesson => {
+  const translated = translations.get(lesson.id);
+  if (!translated || translated.challenges.length !== lesson.challenges.length) {
+    throw new Error(`Missing or incomplete Estonian translation: ${lesson.id}`);
+  }
+  return {
+    ...lesson,
+    ...translated,
+    challenges: lesson.challenges.map((challenge, round) => ({ ...challenge, ...translated.challenges[round] })),
+  };
+});
