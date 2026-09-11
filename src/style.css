@@ -15,3 +15,7 @@
   .header-progress{grid-column:2;grid-row:2;justify-self:end;margin:0 0 9px}
 }
 @media(max-width:420px){.header .nav-link{font-size:10px}.header nav{gap:12px}.header-progress{font-size:9px;padding:8px}.language-switch button{font-size:10px;padding:6px 8px}}
+
+.course-track{margin-top:30px}.course-track>h3{font-size:18px;margin:0 0 16px}.course-track .lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.completion-progress{flex-wrap:wrap}.playing-card h2{overflow-wrap:anywhere}
+@media(max-width:650px){.course-track .lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.course-track .lesson-card:last-child{grid-column:auto}}
+@media(max-width:390px){.course-track .lesson-grid{grid-template-columns:1fr}}

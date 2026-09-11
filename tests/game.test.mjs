@@ -38,7 +38,7 @@ function setup(saved, language, browserLanguage = 'en-US') {
   return { w, lessons, estonianLessons, click, text: () => w.document.body.textContent };
 }
 
-test('all five lessons: retry, answer, explanation, code, completion and persistence', () => {
+test('all lessons: retry, answer, explanation, code, completion and persistence', () => {
   const { w, lessons, click, text } = setup();
   for (const [index, lesson] of lessons.entries()) {
     click(`lesson:${index}`);
@@ -67,19 +67,19 @@ test('all five lessons: retry, answer, explanation, code, completion and persist
     assert.ok(text().includes('completed'));
     click('home');
   }
-  assert.deepEqual(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')), [0,1,2,3,4]);
+  assert.deepEqual(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')), Array.from({ length: lessons.length }, (_, i) => i));
   const restored = setup(w.localStorage.getItem('oop-cards-progress-v1'));
-  assert.ok(restored.text().includes('5 / 5 concepts'));
+  assert.ok(restored.text().includes('11 / 11 concepts'));
   click('lesson:0'); click('play');
   for (const challenge of lessons[0].challenges) { click(`answer:${challenge.answer}`); click('check'); click('next'); }
   click('complete');
-  assert.equal(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')).length, 5, 'Replays do not duplicate progress');
+  assert.equal(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')).length, lessons.length, 'Replays do not duplicate progress');
 });
 
 test('invalid saved progress is ignored; reference library links to lessons', () => {
-  for (const value of ['invalid JSON', '{}', 'null']) assert.ok(setup(value).text().includes('0 / 5 concepts'));
+  for (const value of ['invalid JSON', '{}', 'null']) assert.ok(setup(value).text().includes('0 / 11 concepts'));
   const { click, text } = setup('[0,0,99,-1,"2",null]');
-  assert.ok(text().includes('1 / 5 concepts'));
+  assert.ok(text().includes('1 / 11 concepts'));
   click('glossary');
   assert.ok(text().includes('YOUR POCKET REFERENCE'));
   click('lesson:3');
@@ -131,7 +131,7 @@ test('Estonian covers every lesson, card, feedback, code takeaway and completion
     assert.equal(w.document.querySelector('pre code').textContent, lessons[index].code);
     assert.ok(text().includes(lesson.takeaway));
     click('complete');
-    assert.ok(text().includes(`Läbitud mõisteid: ${index + 1} / 5`));
+    assert.ok(text().includes(`Läbitud mõisteid: ${index + 1} / ${lessons.length}`));
     click('home');
   }
   click('glossary');
@@ -139,7 +139,7 @@ test('Estonian covers every lesson, card, feedback, code takeaway and completion
   click('reset');
   assert.ok(text().includes('Alustad uuesti?'));
   click('cancel-reset');
-  assert.equal(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')).length, 5);
+  assert.equal(JSON.parse(w.localStorage.getItem('oop-cards-progress-v1')).length, lessons.length);
   click('reset');
   click('confirm-reset');
   assert.equal(w.localStorage.getItem('oop-cards-progress-v1'), '[]');
@@ -165,11 +165,25 @@ test('language switching preserves the current card, answer, feedback and comple
   click('language:et');
   const restored = setup(w.localStorage.getItem('oop-cards-progress-v1'), w.localStorage.getItem('oop-cards-language'));
   assert.equal(restored.w.document.documentElement.lang, 'et');
-  assert.ok(restored.text().includes('1 / 5 mõistet'));
+  assert.ok(restored.text().includes('1 / 11 mõistet'));
 });
 
 test('language defaults to Estonian for an Estonian browser; saved choices take precedence', () => {
   assert.equal(setup(undefined, undefined, 'et-EE').w.document.documentElement.lang, 'et');
   assert.equal(setup(undefined, 'en', 'et-EE').w.document.documentElement.lang, 'en');
   assert.equal(setup(undefined, 'unsupported', 'fr-FR').w.document.documentElement.lang, 'en');
+});
+
+test('course path starts with TypeScript and preserves original saved lesson identities', () => {
+  const { w, click, text } = setup('[0,1,2,3,4]');
+  const cards = [...w.document.querySelectorAll('.lesson-card')];
+  assert.deepEqual(cards.map(card => card.dataset.action), [5,6,0,1,2,3,4,7,8,9,10].map(i => `lesson:${i}`));
+  assert.equal(w.document.querySelectorAll('.course-track').length, 3);
+  assert.ok(text().includes('11 concepts · 55 challenges'));
+  assert.equal(cards.filter(card => card.textContent.includes('COMPLETED')).length, 5);
+  click('lesson:5');
+  assert.ok(text().includes('Give your values clear types.'));
+  click('language:et');
+  assert.ok(text().includes('Anna väärtustele selged tüübid.'));
+  assert.equal(w.localStorage.getItem('oop-cards-progress-v1'), '[0,1,2,3,4]');
 });

@@ -82,6 +82,402 @@ const content: Array<Pick<Lesson, 'title' | 'subtitle' | 'question' | 'theory' |
   },
 ];
 
+const courseContent: typeof content = [
+  {
+    "title": "TypeScripti alused",
+    "subtitle": "Anna väärtustele selged tüübid.",
+    "question": "Anna väärtustele selged tüübid.",
+    "theory": "TypeScript kontrollib tüüpe enne koodi käivitamist. string tähistab teksti, number arve ja boolean tõeväärtusi. Algväärtuse põhjal saab tüübi tuletada. JavaScripti väljundist tüübid eemaldatakse; need ei valideeri saabuvaid päringuid.",
+    "analogy": "Silt kastil ütleb arendajale, mis sinna kuulub. See ei kontrolli internetist saabunud paki sisu.",
+    "terms": [
+      [
+        "Tüübimäärang",
+        "Selgelt määratud tüüp: age: number"
+      ],
+      [
+        "Tüübi tuletamine",
+        "let age = 20 tuletab tüübi number"
+      ]
+    ],
+    "takeaway": "Määra funktsiooni sisendite ja väljundi tüübid. number[] sisaldab arve. tsc --noEmit kontrollib tüüpe JavaScripti faile loomata.",
+    "challenges": [
+      {
+        "card": "\"42\"",
+        "prompt": "Milline tüüp kirjeldab seda väärtust?",
+        "options": [
+          "number",
+          "string",
+          "boolean"
+        ],
+        "explanation": "Jutumärgid teevad sellest teksti, isegi kui sisu on numbrid."
+      },
+      {
+        "card": "let score = 10",
+        "prompt": "Kas score saab hiljem väärtuse \"ten\" ilma tüübiveata?",
+        "options": [
+          "Jah",
+          "Ei"
+        ],
+        "explanation": "Algväärtusest tuletatakse number. Sõne ei sobi."
+      },
+      {
+        "card": "const scores: number[] = [1, 2]",
+        "prompt": "Millise väärtuse saab lisada?",
+        "options": [
+          "\"3\"",
+          "3",
+          "false"
+        ],
+        "explanation": "Iga element peab olema arv."
+      },
+      {
+        "card": "add(a: number, b: number): number",
+        "prompt": "Mida kirjeldab viimane number?",
+        "options": [
+          "Tagastusväärtuse tüüpi",
+          "Argumentide arvu"
+        ],
+        "explanation": "Parameetrite loendi järel olev tüüp kirjeldab tulemust."
+      },
+      {
+        "card": "request body → TypeScript",
+        "prompt": "Kas tüübid valideerivad saabuvat JSON-i automaatselt?",
+        "options": [
+          "Jah",
+          "Ei, kontrolli seda käitusajal"
+        ],
+        "explanation": "Tüübimäärangud eemaldatakse. Väliseid andmeid tuleb kontrollida käitusajal."
+      }
+    ]
+  },
+  {
+    "title": "Liidesed ja ühendtüübid",
+    "subtitle": "Kirjelda API vastuvõetavaid andmeid.",
+    "question": "Kirjelda API vastuvõetavaid andmeid.",
+    "theory": "Liides kirjeldab objekti kuju. Tüübi alias saab nimetada lubatud väärtuste ühendi. Valikuline omadus võib olla undefined ning null-väärtust tuleb enne kasutamist kontrollida. unknown nõuab tüübi kitsendamist; any jätab kasulikud kontrollid vahele.",
+    "analogy": "Vorm määrab kohustuslikud väljad ja lubatud valikud, valideerimine kontrollib täidetud vormi.",
+    "terms": [
+      [
+        "interface",
+        "Objekti või teenuse leping"
+      ],
+      [
+        "Ühendtüüp",
+        "Üks mitmest tüübist või literaalväärtusest"
+      ]
+    ],
+    "takeaway": "DTO-d kirjeldavad kihtide vahel liikuvaid andmeid. Liidesed ei loo isendeid ega asenda valideerimist.",
+    "challenges": [
+      {
+        "card": "description?: string",
+        "prompt": "Kas selle välja võib ära jätta?",
+        "options": [
+          "Jah",
+          "Ei"
+        ],
+        "explanation": "Küsimärk muudab omaduse valikuliseks."
+      },
+      {
+        "card": "type Visibility = \"public\" | \"private\"",
+        "prompt": "Milline väärtus on lubatud?",
+        "options": [
+          "\"friends\"",
+          "\"private\""
+        ],
+        "explanation": "Literaalide ühend lubab ainult loetletud väärtusi."
+      },
+      {
+        "card": "interface Post { title: string }",
+        "prompt": "Kas see loob Post-isendi?",
+        "options": [
+          "Jah",
+          "Ei"
+        ],
+        "explanation": "Liides kirjeldab kuju ning sellel pole käitusajal konstruktorit."
+      },
+      {
+        "card": "post: Post | null",
+        "prompt": "Mida teha enne post.title lugemist?",
+        "options": [
+          "Kontrolli, et post pole null",
+          "Kasuta seda kohe"
+        ],
+        "explanation": "Null-kontroll kitsendab tulemuse tüübiks Post."
+      },
+      {
+        "card": "input: unknown",
+        "prompt": "Kuidas saab ohutult kutsuda input.trim()?",
+        "options": [
+          "Muuda tüübiks any",
+          "Kontrolli typeof input === \"string\""
+        ],
+        "explanation": "Kontroll kitsendab unknown-tüübi sõneks. any eemaldaks kaitse."
+      }
+    ]
+  },
+  {
+    "title": "Kompositsioon ja lepingud",
+    "subtitle": "Anna teenusele vajalikud sõltuvused.",
+    "question": "Anna teenusele vajalikud sõltuvused.",
+    "theory": "Kompositsioon tähendab, et objekt kasutab teist objekti. Konstruktori kaudu süstimine annab sõltuvuse väljastpoolt. Sõltu liidesest, et mäluhoidla ja andmebaasihoidla saaksid täita sama lepingut. public on ligipääsetav kõikjalt, private oma klassist ja protected oma klassist ning alamklassidest.",
+    "analogy": "Teenusel on hoidla, nagu autol on mootor. Teenus ei ole hoidla liik.",
+    "terms": [
+      [
+        "Kompositsioon",
+        "Seos „omab või kasutab“"
+      ],
+      [
+        "Süstimine",
+        "Anna sõltuvused konstruktorisse"
+      ]
+    ],
+    "takeaway": "Teenus vajab ainult lepingut. readonly takistab repo ümbermääramist pärast konstrueerimist; see ei külmuta hoidla objekti.",
+    "challenges": [
+      {
+        "card": "UsersService → UsersRepository",
+        "prompt": "Milline seos sobib?",
+        "options": [
+          "Teenus pärib hoidlast",
+          "Teenus kasutab hoidlat"
+        ],
+        "explanation": "Teise objekti kasutamine on kompositsioon."
+      },
+      {
+        "card": "constructor(private repo: Repository)",
+        "prompt": "Kes annab hoidla?",
+        "options": [
+          "Teenust loov kood",
+          "Teenus peab selle ise looma"
+        ],
+        "explanation": "Kutsuja annab sõltuvuse konstruktorisse."
+      },
+      {
+        "card": "protected name: string",
+        "prompt": "Kus on otsene ligipääs lubatud?",
+        "options": [
+          "Kõikjal",
+          "Klassis ja alamklassides"
+        ],
+        "explanation": "protected lubab alamklassi ligipääsu, erinevalt private-ist."
+      },
+      {
+        "card": "private readonly repo: Repository",
+        "prompt": "Kas readonly külmutab kõik hoidla andmed?",
+        "options": [
+          "Jah",
+          "Ei"
+        ],
+        "explanation": "See takistab omaduse ümbermääramist, mitte objekti sisemisi muudatusi."
+      },
+      {
+        "card": "MySQL repository → fake repository",
+        "prompt": "Mis lubab samal teenusel kasutada mõlemat?",
+        "options": [
+          "Ühine liides",
+          "Ühine andmebaasiühendus"
+        ],
+        "explanation": "Mõlemad teostused pakuvad teenuse oodatud tegevusi."
+      }
+    ]
+  },
+  {
+    "title": "API kihid",
+    "subtitle": "Jälgi päringut läbi rakenduse.",
+    "question": "Jälgi päringut läbi rakenduse.",
+    "theory": "Ruuter seob HTTP meetodi ja tee kontrolleriga. Kontroller loeb ja valideerib sisendi ning vormistab vastuse. Teenus kontrollib ärireegleid. Hoidla tegeleb andmete salvestamisega. Hoia HTTP detailid teenusest ja SQL kontrollerist väljas.",
+    "analogy": "Restoranis on teenindaja, köök ja ladu. Igaühel on erinev vastutus.",
+    "terms": [
+      [
+        "Kontroller",
+        "HTTP sisend ja väljund"
+      ],
+      [
+        "Teenus / hoidla",
+        "Ärireeglid / andmetele ligipääs"
+      ]
+    ],
+    "takeaway": "See iseseisev mudel näitab kihtide piiri ilma Expressi sõltuvusteta. Expressis kutsub ruuter kontrollerit, mis saadab vastuse.",
+    "challenges": [
+      {
+        "card": "GET /posts/:id → handler",
+        "prompt": "Milline kiht seob tee töötlejaga?",
+        "options": [
+          "Ruuter",
+          "Hoidla"
+        ],
+        "explanation": "Ruutimine seob meetodid ja teed töötlejatega."
+      },
+      {
+        "card": "req.params.id",
+        "prompt": "Milline kiht loeb seda HTTP detaili?",
+        "options": [
+          "Teenus",
+          "Kontroller"
+        ],
+        "explanation": "Kontroller teisendab HTTP sisendi teenuse argumentideks."
+      },
+      {
+        "card": "Only the author may edit a post",
+        "prompt": "Kuhu kuulub see ärireegel?",
+        "options": [
+          "Teenusesse",
+          "SQL ühenduse seadistusse"
+        ],
+        "explanation": "Teenus kontrollib rakenduse reegleid."
+      },
+      {
+        "card": "SELECT ... WHERE id = ?",
+        "prompt": "Millisele kihile kuulub see päring?",
+        "options": [
+          "Kontrollerile",
+          "Hoidlale"
+        ],
+        "explanation": "Hoidla peidab andmebaasi detailid ning kasutab seotud parameetreid."
+      },
+      {
+        "card": "\"abc\" → Number → NaN",
+        "prompt": "Mida peaks kontroller selle ID-ga tegema?",
+        "options": [
+          "Lükka vigane sisend tagasi",
+          "Saada NaN hoidlasse"
+        ],
+        "explanation": "Kontrolli teisendatud väärtust enne teenuse kutsumist."
+      }
+    ]
+  },
+  {
+    "title": "Asünkroonsus ja vead",
+    "subtitle": "Oota andmeid ja käsitle puuduvaid tulemusi.",
+    "question": "Oota andmeid ja käsitle puuduvaid tulemusi.",
+    "theory": "async-funktsioon tagastab Promise-i. await annab asünkroonses funktsioonis täidetud lubaduse väärtuse või viskab tagasilükkamise põhjuse. Puuduv ressurss erineb nurjunud andmebaasitoimingust. Käsitle oodatud puudumist selgelt ning edasta ootamatud vead veahalduse piirile.",
+    "analogy": "Numbriga tellimuspilet on lubadus toidust, mitte toit ise.",
+    "terms": [
+      [
+        "Promise<T>",
+        "Tulevane T-tüüpi tulemus"
+      ],
+      [
+        "await",
+        "Oota täitumist või tagasilükkamist"
+      ]
+    ],
+    "takeaway": "Puuduv postitus muutub konkreetseks veaks. HTTP kiht saab selle teisendada 404-ks; ootamatuid tõrkeid ei tohiks esitada puuduvate andmetena.",
+    "challenges": [
+      {
+        "card": "async get(): Promise<Post>",
+        "prompt": "Mille tagastab get() kohe?",
+        "options": [
+          "Promise-i",
+          "Otse Post-objekti"
+        ],
+        "explanation": "async-funktsioonid tagastavad alati Promise-i."
+      },
+      {
+        "card": "await repo.findById(1)",
+        "prompt": "Mis juhtub, kui Promise lükatakse tagasi?",
+        "options": [
+          "await viskab tagasilükkamise põhjuse",
+          "Tagastatakse alati null"
+        ],
+        "explanation": "Käsitle viga ümbritseva catch-iga või lase sel edasi liikuda."
+      },
+      {
+        "card": "Post | null",
+        "prompt": "Otsing õnnestub, kuid postitust pole. Milline tulemus sobib?",
+        "options": [
+          "null",
+          "Väljamõeldud postitus"
+        ],
+        "explanation": "null tähistab selgelt puuduvat ressurssi."
+      },
+      {
+        "card": "NotFoundError",
+        "prompt": "Milline HTTP olekukood sobib puuduvale postitusele?",
+        "options": [
+          "200",
+          "404"
+        ],
+        "explanation": "404 tähendab, et soovitud ressurssi ei leitud."
+      },
+      {
+        "card": "Database connection fails",
+        "prompt": "Kas iga tõrge peaks muutuma 404-ks?",
+        "options": [
+          "Jah",
+          "Ei, edasta ootamatud tõrked"
+        ],
+        "explanation": "Andmebaasi katkestus ei tõesta postituse puudumist."
+      }
+    ]
+  },
+  {
+    "title": "Testitavad teenused",
+    "subtitle": "Kontrolli käitumist juhitavate sõltuvustega.",
+    "question": "Kontrolli käitumist juhitavate sõltuvustega.",
+    "theory": "Ühiktest kontrollib väikest käitumisosa juhitud sisenditega. Süsti võltshoidla, et testida teenust ilma andmebaasita. Otspunkti testid kontrollivad HTTP olekukoodi ja vastuse keha. Kata nii õnnestumine kui ka ebaõnnestumine ning kontrolli tegelikku tulemust, mitte ainult meetodi väljakutsumist.",
+    "analogy": "Proovis saab kasutada asendajat, et kontrollida ühe näitleja teksti kogu teatrit kokku kutsumata.",
+    "terms": [
+      [
+        "Võltsteostus",
+        "Sõltuvuse juhitav teostus"
+      ],
+      [
+        "Väide",
+        "Kontrollib oodatud tulemust"
+      ]
+    ],
+    "takeaway": "Need iseseisvad kontrollid nurjuvad vale käitumise korral. Kursusel kasuta teenuse väidete jaoks Mocha/Chai tööriistu ja HTTP käitumise jaoks Supertesti.",
+    "challenges": [
+      {
+        "card": "Unit test: PostsService",
+        "prompt": "Milline sõltuvus teeb testi MySQL-ist sõltumatuks?",
+        "options": [
+          "Võltshoidla",
+          "Tootmisandmebaas"
+        ],
+        "explanation": "Võltsteostus annab ennustatavaid tulemusi ilma andmebaasiühenduseta."
+      },
+      {
+        "card": "service.getName(1)",
+        "prompt": "Kas meetodi kutsumisest piisab tulemuse kontrollimiseks?",
+        "options": [
+          "Jah",
+          "Ei, kontrolli oodatud väärtust"
+        ],
+        "explanation": "Ainult väljakutse võib vale tagastusväärtuse märkamata jätta."
+      },
+      {
+        "card": "GET /posts/999",
+        "prompt": "Mida peaks otspunkti test kontrollima?",
+        "options": [
+          "Ainult meetodi nime",
+          "HTTP olekukoodi ja vastuse keha"
+        ],
+        "explanation": "Need on API lepingu vaadeldavad osad."
+      },
+      {
+        "card": "Expected rejection from async get()",
+        "prompt": "Kuidas peaks test seda jälgima?",
+        "options": [
+          "Oota ja kontrolli tagasilükkamist",
+          "Ignoreeri Promise-i"
+        ],
+        "explanation": "Promise-i ignoreerides võib test lõppeda enne tõrget."
+      },
+      {
+        "card": "Refactor functions into classes",
+        "prompt": "Mida peaksid olemasolevad otspunkti testid kinnitama?",
+        "options": [
+          "API avalik käitumine jääb samaks",
+          "Iga funktsioon muutus klassiks"
+        ],
+        "explanation": "Refaktoreerimine muudab struktuuri, säilitades vaadeldava käitumise."
+      }
+    ]
+  }
+];
+content.push(...courseContent);
+
 export const estonianLessons: Lesson[] = englishLessons.map((lesson, index) => ({
   ...lesson,
   ...content[index],

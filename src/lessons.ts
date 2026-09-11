@@ -97,3 +97,478 @@ export const lessons: Lesson[] = [
     code:'class Animal {\n  makeSound(): string { return "Some sound"; }\n}\n\nclass Dog extends Animal {\n  override makeSound(): string { return "Woof!"; }\n}\n\nclass Cat extends Animal {\n  override makeSound(): string { return "Meow!"; }\n}\n\nconst animals: Animal[] = [new Dog(), new Cat()];\nfor (const animal of animals) {\n  console.log(animal.makeSound());\n}\n// "Woof!", then "Meow!"',takeaway:'The loop treats every item as an Animal. Each object’s overridden makeSound() decides the result. That is polymorphism in action.',
   },
 ];
+
+// Append to preserve the original saved lesson indices.
+const courseLessons: Lesson[] = [
+  {
+    "title": "TypeScript basics",
+    "subtitle": "Give your values clear types.",
+    "question": "Give your values clear types.",
+    "theory": "TypeScript checks types before code runs. Use string for text, number for numbers and boolean for true or false. Initial values can let TypeScript infer a type. Types are removed from the JavaScript output; they do not validate incoming requests.",
+    "analogy": "A label on a box tells developers what belongs inside. It cannot inspect a parcel arriving from the internet.",
+    "terms": [
+      [
+        "Annotation",
+        "Explicit type: age: number"
+      ],
+      [
+        "Inference",
+        "let age = 20 infers number"
+      ]
+    ],
+    "code": "let age: number = 20;\nconst username: string = \"Mari\";\nconst active: boolean = true;\nconst scores: number[] = [10, 20];\n\nfunction add(a: number, b: number): number {\n  return a + b;\n}\nconsole.log(username, active, add(age, scores[0]));",
+    "takeaway": "Annotate function inputs and outputs. number[] holds numbers. Run tsc --noEmit to check types without generating JavaScript.",
+    "icon": "⌘",
+    "color": "blue",
+    "challenges": [
+      {
+        "card": "\"42\"",
+        "icon": "✦",
+        "prompt": "Which type describes this value?",
+        "options": [
+          "number",
+          "string",
+          "boolean"
+        ],
+        "answer": 1,
+        "explanation": "Quotes make this text, even when it contains digits."
+      },
+      {
+        "card": "let score = 10",
+        "icon": "✦",
+        "prompt": "Can score later receive \"ten\" without a type error?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": 1,
+        "explanation": "The initial value infers number. A string does not match."
+      },
+      {
+        "card": "const scores: number[] = [1, 2]",
+        "icon": "✦",
+        "prompt": "Which value can be pushed?",
+        "options": [
+          "\"3\"",
+          "3",
+          "false"
+        ],
+        "answer": 1,
+        "explanation": "Every element must be a number."
+      },
+      {
+        "card": "add(a: number, b: number): number",
+        "icon": "✦",
+        "prompt": "What does the final number describe?",
+        "options": [
+          "The return type",
+          "The number of arguments"
+        ],
+        "answer": 0,
+        "explanation": "The type after the parameter list describes the result."
+      },
+      {
+        "card": "request body → TypeScript",
+        "icon": "✦",
+        "prompt": "Do types automatically validate incoming JSON?",
+        "options": [
+          "Yes",
+          "No, check it at runtime"
+        ],
+        "answer": 1,
+        "explanation": "Type annotations are erased. External data still needs runtime validation."
+      }
+    ]
+  },
+  {
+    "title": "Interfaces & unions",
+    "subtitle": "Describe the data your API accepts.",
+    "question": "Describe the data your API accepts.",
+    "theory": "An interface describes an object’s shape. A type alias can name a union of allowed values. Optional properties may be undefined, and a nullable result must be checked before use. unknown requires narrowing; any skips useful checks.",
+    "analogy": "A form specifies required fields and allowed choices, while validation checks the filled-in form.",
+    "terms": [
+      [
+        "interface",
+        "An object or service contract"
+      ],
+      [
+        "Union",
+        "One of several types or literal values"
+      ]
+    ],
+    "code": "type Visibility = \"public\" | \"private\";\ninterface CreatePostDto {\n  title: string;\n  visibility: Visibility;\n  description?: string;\n}\nfunction label(post: CreatePostDto): string {\n  return post.description ?? post.title;\n}\nconst post: CreatePostDto = { title: \"Hello\", visibility: \"public\" };\nconsole.log(label(post)); // \"Hello\"",
+    "takeaway": "DTOs describe data passed between layers. Interfaces do not create instances or replace validation.",
+    "icon": "⌘",
+    "color": "mint",
+    "challenges": [
+      {
+        "card": "description?: string",
+        "icon": "✦",
+        "prompt": "Can this field be omitted?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": 0,
+        "explanation": "The question mark makes the property optional."
+      },
+      {
+        "card": "type Visibility = \"public\" | \"private\"",
+        "icon": "✦",
+        "prompt": "Which value is allowed?",
+        "options": [
+          "\"friends\"",
+          "\"private\""
+        ],
+        "answer": 1,
+        "explanation": "A literal union accepts only its listed values."
+      },
+      {
+        "card": "interface Post { title: string }",
+        "icon": "✦",
+        "prompt": "Does this create a Post instance?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": 1,
+        "explanation": "An interface describes a shape and has no runtime constructor."
+      },
+      {
+        "card": "post: Post | null",
+        "icon": "✦",
+        "prompt": "What should happen before reading post.title?",
+        "options": [
+          "Check post is not null",
+          "Use it immediately"
+        ],
+        "answer": 0,
+        "explanation": "A null check narrows the result to Post."
+      },
+      {
+        "card": "input: unknown",
+        "icon": "✦",
+        "prompt": "How can you safely call input.trim()?",
+        "options": [
+          "Change it to any",
+          "Check typeof input === \"string\""
+        ],
+        "answer": 1,
+        "explanation": "The check narrows unknown to string. any would remove protection."
+      }
+    ]
+  },
+  {
+    "title": "Composition & contracts",
+    "subtitle": "Give a service its dependencies.",
+    "question": "Give a service its dependencies.",
+    "theory": "Composition means an object uses another object. Constructor injection supplies that dependency from outside. Depend on an interface so an in-memory repository and a database repository can fulfil the same contract. public is accessible everywhere, private within its class, and protected within the class and subclasses.",
+    "analogy": "A service has a repository, just as a car has an engine. It is not a kind of repository.",
+    "terms": [
+      [
+        "Composition",
+        "A has-a relationship"
+      ],
+      [
+        "Injection",
+        "Pass dependencies into the constructor"
+      ]
+    ],
+    "code": "interface NamesRepository {\n  findName(id: number): string;\n}\nclass NamesService {\n  constructor(private readonly repo: NamesRepository) {}\n  greet(id: number): string {\n    return \"Hello, \" + this.repo.findName(id);\n  }\n}\nconst fake: NamesRepository = { findName: () => \"Mari\" };\nconsole.log(new NamesService(fake).greet(1));",
+    "takeaway": "The service only needs the contract. readonly prevents reassigning repo after construction; it does not freeze the repository object.",
+    "icon": "⌘",
+    "color": "peach",
+    "challenges": [
+      {
+        "card": "UsersService → UsersRepository",
+        "icon": "✦",
+        "prompt": "Which relationship fits?",
+        "options": [
+          "Service extends Repository",
+          "Service uses Repository"
+        ],
+        "answer": 1,
+        "explanation": "Using another object is composition."
+      },
+      {
+        "card": "constructor(private repo: Repository)",
+        "icon": "✦",
+        "prompt": "Who supplies the repository?",
+        "options": [
+          "The code creating the service",
+          "The service must create it"
+        ],
+        "answer": 0,
+        "explanation": "The caller passes the dependency to the constructor."
+      },
+      {
+        "card": "protected name: string",
+        "icon": "✦",
+        "prompt": "Where is direct access allowed?",
+        "options": [
+          "Anywhere",
+          "In the class and subclasses"
+        ],
+        "answer": 1,
+        "explanation": "protected allows subclass access, unlike private."
+      },
+      {
+        "card": "private readonly repo: Repository",
+        "icon": "✦",
+        "prompt": "Does readonly freeze all repository data?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": 1,
+        "explanation": "It prevents reassigning this property, not changes inside the object."
+      },
+      {
+        "card": "MySQL repository → fake repository",
+        "icon": "✦",
+        "prompt": "What lets the same service use either?",
+        "options": [
+          "A shared interface",
+          "A shared database connection"
+        ],
+        "answer": 0,
+        "explanation": "Both implementations satisfy the operations the service expects."
+      }
+    ]
+  },
+  {
+    "title": "API layers",
+    "subtitle": "Follow a request through the application.",
+    "question": "Follow a request through the application.",
+    "theory": "A router connects an HTTP method and path to a controller. The controller reads and validates request input and formats the response. The service enforces business rules. The repository handles persistence. Keep HTTP details out of the service and SQL out of the controller.",
+    "analogy": "A restaurant has a waiter, a kitchen and a pantry. Each has a different responsibility.",
+    "terms": [
+      [
+        "Controller",
+        "HTTP input and output"
+      ],
+      [
+        "Service / repository",
+        "Business rules / data access"
+      ]
+    ],
+    "code": "interface Post { id: number; title: string }\ninterface PostsRepository { findById(id: number): Post | null }\nclass PostsService {\n  constructor(private repo: PostsRepository) {}\n  get(id: number): Post | null { return this.repo.findById(id); }\n}\n// Framework-independent controller model.\nfunction getPost(rawId: string, service: PostsService) {\n  const id = Number(rawId);\n  if (!Number.isInteger(id) || id <= 0) return { status: 400 };\n  const post = service.get(id);\n  return post ? { status: 200, body: post } : { status: 404 };\n}",
+    "takeaway": "This standalone model shows the boundary without Express dependencies. In Express, the router invokes a controller that sends the response.",
+    "icon": "⌘",
+    "color": "lavender",
+    "challenges": [
+      {
+        "card": "GET /posts/:id → handler",
+        "icon": "✦",
+        "prompt": "Which layer connects the path to the handler?",
+        "options": [
+          "Router",
+          "Repository"
+        ],
+        "answer": 0,
+        "explanation": "Routing maps methods and paths to handlers."
+      },
+      {
+        "card": "req.params.id",
+        "icon": "✦",
+        "prompt": "Which layer reads this HTTP detail?",
+        "options": [
+          "Service",
+          "Controller"
+        ],
+        "answer": 1,
+        "explanation": "The controller translates HTTP input into service arguments."
+      },
+      {
+        "card": "Only the author may edit a post",
+        "icon": "✦",
+        "prompt": "Where does this business rule belong?",
+        "options": [
+          "Service",
+          "SQL connection setup"
+        ],
+        "answer": 0,
+        "explanation": "The service enforces application rules."
+      },
+      {
+        "card": "SELECT ... WHERE id = ?",
+        "icon": "✦",
+        "prompt": "Which layer owns this query?",
+        "options": [
+          "Controller",
+          "Repository"
+        ],
+        "answer": 1,
+        "explanation": "The repository hides database details and uses bound parameters."
+      },
+      {
+        "card": "\"abc\" → Number → NaN",
+        "icon": "✦",
+        "prompt": "What should the controller do with this ID?",
+        "options": [
+          "Reject invalid input",
+          "Send NaN to the repository"
+        ],
+        "answer": 0,
+        "explanation": "Validate the converted value before calling the service."
+      }
+    ]
+  },
+  {
+    "title": "Async & errors",
+    "subtitle": "Wait for data and handle missing results.",
+    "question": "Wait for data and handle missing results.",
+    "theory": "An async function returns a Promise. await obtains its fulfilled value or throws its rejection inside an async function. A missing resource is different from a failed database operation. Handle expected absence explicitly and pass unexpected errors to the error-handling boundary.",
+    "analogy": "A numbered pickup ticket is a promise of a meal, not the meal itself.",
+    "terms": [
+      [
+        "Promise<T>",
+        "A future result of type T"
+      ],
+      [
+        "await",
+        "Wait for fulfillment or rejection"
+      ]
+    ],
+    "code": "interface Post { id: number; title: string }\ninterface Repository { findById(id: number): Promise<Post | null> }\nclass NotFoundError extends Error {}\nclass PostsService {\n  constructor(private repo: Repository) {}\n  async get(id: number): Promise<Post> {\n    const post = await this.repo.findById(id);\n    if (post === null) throw new NotFoundError(\"Post not found\");\n    return post;\n  }\n}",
+    "takeaway": "A missing post becomes a specific error. The HTTP boundary can map it to 404; unexpected failures should not be disguised as missing data.",
+    "icon": "⌘",
+    "color": "yellow",
+    "challenges": [
+      {
+        "card": "async get(): Promise<Post>",
+        "icon": "✦",
+        "prompt": "What does get() immediately return?",
+        "options": [
+          "A Promise",
+          "A Post directly"
+        ],
+        "answer": 0,
+        "explanation": "async functions always return a Promise."
+      },
+      {
+        "card": "await repo.findById(1)",
+        "icon": "✦",
+        "prompt": "What if the Promise rejects?",
+        "options": [
+          "await throws the rejection",
+          "It always returns null"
+        ],
+        "answer": 0,
+        "explanation": "Handle the thrown error with a surrounding catch or let it propagate."
+      },
+      {
+        "card": "Post | null",
+        "icon": "✦",
+        "prompt": "The lookup succeeds but the post is absent. Which result fits?",
+        "options": [
+          "null",
+          "A fabricated post"
+        ],
+        "answer": 0,
+        "explanation": "null explicitly models an absent resource."
+      },
+      {
+        "card": "NotFoundError",
+        "icon": "✦",
+        "prompt": "Which HTTP status fits a missing post?",
+        "options": [
+          "200",
+          "404"
+        ],
+        "answer": 1,
+        "explanation": "404 indicates that the requested resource was not found."
+      },
+      {
+        "card": "Database connection fails",
+        "icon": "✦",
+        "prompt": "Should every failure become 404?",
+        "options": [
+          "Yes",
+          "No, propagate unexpected failures"
+        ],
+        "answer": 1,
+        "explanation": "A database outage does not prove the post is absent."
+      }
+    ]
+  },
+  {
+    "title": "Testable services",
+    "subtitle": "Prove behavior with controlled dependencies.",
+    "question": "Prove behavior with controlled dependencies.",
+    "theory": "A unit test checks a small piece of behavior with controlled inputs. Inject a fake repository to test a service without a database. Endpoint tests check HTTP status and response bodies. Cover both success and failure, and verify the actual result rather than merely calling the method.",
+    "analogy": "A rehearsal uses a stand-in so you can check one actor’s lines without assembling the whole theatre.",
+    "terms": [
+      [
+        "Fake",
+        "A controlled implementation of a dependency"
+      ],
+      [
+        "Assertion",
+        "Checks the expected result"
+      ]
+    ],
+    "code": "interface Repository { findName(id: number): string | null }\nclass NamesService {\n  constructor(private repo: Repository) {}\n  getName(id: number): string {\n    const name = this.repo.findName(id);\n    if (name === null) throw new Error(\"Not found\");\n    return name;\n  }\n}\nconst fake: Repository = { findName: id => id === 1 ? \"Mari\" : null };\nconst service = new NamesService(fake);\nif (service.getName(1) !== \"Mari\") throw new Error(\"Wrong name\");\nlet missing = false;\ntry { service.getName(99); } catch (error) {\n  missing = error instanceof Error && error.message === \"Not found\";\n}\nif (!missing) throw new Error(\"Expected missing-name error\");",
+    "takeaway": "These standalone checks fail if behavior is wrong. In the course, use Mocha/Chai for service assertions and Supertest for HTTP behavior.",
+    "icon": "⌘",
+    "color": "blue",
+    "challenges": [
+      {
+        "card": "Unit test: PostsService",
+        "icon": "✦",
+        "prompt": "Which dependency makes the test independent of MySQL?",
+        "options": [
+          "A fake repository",
+          "The production database"
+        ],
+        "answer": 0,
+        "explanation": "A fake provides predictable results without a database connection."
+      },
+      {
+        "card": "service.getName(1)",
+        "icon": "✦",
+        "prompt": "Is calling the method enough to verify its result?",
+        "options": [
+          "Yes",
+          "No, assert the expected value"
+        ],
+        "answer": 1,
+        "explanation": "A call alone can miss an incorrect return value."
+      },
+      {
+        "card": "GET /posts/999",
+        "icon": "✦",
+        "prompt": "What should an endpoint test check?",
+        "options": [
+          "Only the method name",
+          "HTTP status and response body"
+        ],
+        "answer": 1,
+        "explanation": "These are observable parts of the API contract."
+      },
+      {
+        "card": "Expected rejection from async get()",
+        "icon": "✦",
+        "prompt": "How should a test observe it?",
+        "options": [
+          "Await and assert the rejection",
+          "Ignore the Promise"
+        ],
+        "answer": 0,
+        "explanation": "Ignoring the Promise can let the test finish before the failure."
+      },
+      {
+        "card": "Refactor functions into classes",
+        "icon": "✦",
+        "prompt": "What should existing endpoint tests confirm?",
+        "options": [
+          "The public API behavior stays the same",
+          "Every function became a class"
+        ],
+        "answer": 0,
+        "explanation": "Refactoring changes structure while preserving observable behavior."
+      }
+    ]
+  }
+];
+lessons.push(...courseLessons);
